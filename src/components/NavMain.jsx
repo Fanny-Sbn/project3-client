@@ -20,30 +20,31 @@ const NavMain = (props) => {
   }
 
   return (
-    <nav className="NavMain">
+    <nav className="NavMain" style={{backgroundColor:"#20C9E0", color:"white", marginBottom:"20px"}}>
       <NavLink exact to="/">
-        <h3 className="logo">App name</h3>
+        <h3 className="logo" style={{marginRight:"20px"}}>Hodas</h3>
       </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
           <React.Fragment>
             <li>
               <NavLink to="/profile">
-                {context.user && context.user.email}
+                Profil
               </NavLink>
             </li>
+
             <li>
-              <p onClick={handleLogout}>Logout</p>
+              <p onClick={handleLogout}>Se déconnecter</p>
             </li>
           </React.Fragment>
         )}
         {!context.isLoggedIn && (
           <React.Fragment>
             <li>
-              <NavLink to="/signin">Log in</NavLink>
+              <NavLink to="/signin">Se connecter</NavLink>
             </li>
             <li>
-              <NavLink to="/signup">Create account</NavLink>
+              <NavLink to="/signup">Créer un compte</NavLink>
             </li>
           </React.Fragment>
         )}

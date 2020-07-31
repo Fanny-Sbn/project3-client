@@ -7,26 +7,23 @@ class FormSignup extends Component {
   static contextType = UserContext;
 
   state = {
+    firstName:"",
+    lastName:"",
+    companyName:"",
+    phoneNumber:"",
     email: "",
     password: "",
   };
 
   handleChange = (event) => {
-    const value =
-      event.target.type === "file"
-        ? event.target.files[0]
-        : event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value;
-
+    const value = event.target.value;
     const key = event.target.name;
-
     this.setState({ [key]: value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-
+    
     apiHandler
       .signup(this.state)
       .then((data) => {
@@ -41,11 +38,25 @@ class FormSignup extends Component {
   render() {
     return (
       <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" />
-        <button>Submit</button>
+        <label htmlFor="firstName">Prénom</label><br/>
+        <input type="text" id="firstName" name="firstName" /><br/>
+
+        <label htmlFor="lastName">Nom</label><br/>
+        <input type="text" id="lastName" name="lastName" /><br/>
+
+        <label htmlFor="companyName">Nom de société</label><br/>
+        <input type="text" id="companyName" name="companyName" /><br/>
+
+        <label htmlFor="phoneNumber">Téléphone</label><br/>
+        <input type="text" id="phoneNumber" name="phoneNumber" /><br/>
+
+        <label htmlFor="email">Email</label><br/>
+        <input type="email" id="email" name="email" /><br/>
+
+        <label htmlFor="password">Password</label><br/>
+        <input type="password" id="password" name="password" /><br/>
+
+        <button>Créer un compte</button>
       </form>
     );
   }

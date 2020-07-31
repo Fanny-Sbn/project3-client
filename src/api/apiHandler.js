@@ -15,6 +15,24 @@ function errorHandler(error) {
 
 export default {
   service,
+  addPointOfSale(data) {
+    return service
+      .post("/api/client/creation-point-vente", data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+  getUserPointOfSale(){
+    return service
+    .get("api/client/point-vente")
+    .then((res)=>res.data)
+    .catch(errorHandler)
+  },
+  updateClient(data) {
+    return service
+      .patch("/api/client", data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
 
   signup(userInfo) {
     return service
@@ -40,13 +58,6 @@ export default {
   logout() {
     return service
       .get("/api/auth/logout")
-      .then((res) => res.data)
-      .catch(errorHandler);
-  },
-
-  getItems() {
-    return service
-      .get("/api/items")
       .then((res) => res.data)
       .catch(errorHandler);
   },
