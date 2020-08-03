@@ -23,17 +23,34 @@ export default {
   },
   getUserPointOfSale(){
     return service
-    .get("api/client/point-vente")
+    .get("/api/client/point-vente")
     .then((res)=>res.data)
     .catch(errorHandler)
   },
+  createIntervention(id,data){
+    return service
+    .post(`/api/client/machine/${id}/intervention`, data)
+    .then((res)=>res.data)
+    .catch(errorHandler)
+  },
+  getMachinePointOfSale(id){
+    return service
+  .get(`api/client/point-vente/${id}/machine`)
+  .then((res)=>res.data)
+  .catch(errorHandler)
+},
   updateClient(data) {
     return service
       .patch("/api/client", data)
       .then((res) => res.data)
       .catch(errorHandler);
   },
-
+  addMachine(pointOfSaleId,data) {
+    return service
+      .post(`/api/client/creation-machine/${pointOfSaleId}`, data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
   signup(userInfo) {
     return service
       .post("/api/auth/signup", userInfo)

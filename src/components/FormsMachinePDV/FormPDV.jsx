@@ -10,8 +10,6 @@ class FormPDV extends Component {
     httpResponse: null,
   };
 
-  /* formRef = React.createRef(); */
-
   handleChange = (event) => {
     const value = event.target.value;
     const key = event.target.name;
@@ -23,9 +21,8 @@ class FormPDV extends Component {
     const { httpResponse, ...data } = this.state;
     apiHandler
       .addPointOfSale(data)
-      .then((data) => {
-        /* this.formRef.current.reset(); 
-        this.props.addItem(data);*/
+      .then((allPDV) => {
+        this.props.updatePointOfSale(allPDV)
         this.setState({
           httpResponse: {
             status: "success",
@@ -35,7 +32,7 @@ class FormPDV extends Component {
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
           this.props.displayForm();
-        }, 2000);
+        }, 1000);
       })
       .catch((error) => {
         this.setState({
@@ -62,12 +59,11 @@ class FormPDV extends Component {
     return (
       <div className="formPDV-container">
         <form
-          /* ref={this.formRef} */
           className="FormPDV"
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         >
-          <p onClick={this.props.displayForm} className="close-link">
+          <p style={{cursor:"pointer"}} onClick={this.props.displayForm} className="close-link">
             X
           </p>
           <h2>Ajout d'un point de vente</h2>
@@ -98,7 +94,7 @@ class FormPDV extends Component {
             /> <br/>
           </div>
       
-          <button primary>Ajouter ce point de vente</button>
+          <button>Ajouter ce point de vente</button>
         </form>
       </div>
     );

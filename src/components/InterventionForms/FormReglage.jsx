@@ -1,44 +1,40 @@
-import React, { Component } from "react";
+import React from 'react';
+import MultiSelect from "@khanacademy/react-multi-select";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
 
-class FormReglage extends Component {
+const options = [
+  { value: 'Quantité eau', label: `Quantité d'eau et dose` },
+  { value: 'Quantité poudre', label: 'Quantité de poudre' },
+  { value: 'Température', label: 'Température' },
+  { value: 'Changement de sélection', label: 'Changement de sélection' },
+  { value: 'Ajout de sélection', label: 'Ajout de sélection' }
+]
+
+class FormReglage extends React.Component {
   static contextType = UserContext;
-
   state = {
-    httpRespone: null,
-  };
+    httpResponse: null,
+    error: null,
+    title: "Demande réapprovisionnement",
+    selectedOption: [],
+  }
 
-  handleChange = (event) => {
-    const key = event.target.name;
+  handleChangeDescription = (event) => {
     const value = event.target.value;
+    const key = event.target.name;
     this.setState({ [key]: value });
-  };
-
-  isValidInput = (key) => {
-    if (this.state[key] === "") {
-      return false;
-    } else return true;
-  };
-
-  checkError = () => {
-    for (const key in this.state) {
-      if (key === "httpResponse") continue;
-      if (this.state[key] === "") {
-        return true;
-      }
-    }
-    return false;
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { } = this.state;
+
+    const { httpResponse, error, ...data } = this.state;
+
     apiHandler
-      .updateMachine(this.state)
+      .createIntervention(this.props.id_machine, data)
       .then((data) => {
-        /* this.context.setUser(data); */
         this.setState({
           httpResponse: {
             status: "success",
@@ -47,71 +43,62 @@ class FormReglage extends Component {
         });
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
-          this.props.history.push("/");
-        }, 3000);
+          this.props.handleFormReglages();
+        }, 1000);
       })
       .catch((error) => {
         this.setState({
           httpResponse: {
             status: "failure",
-            message:
-              "Une erreur s'est produite, veuillez directement contacter le gérant au 0578568879",
+            message: "Une erreur s'est produite, réessayez plus tard",
           },
         });
-
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
-        }, 2000);
+        }, 1000);
       });
   };
 
-
   render() {
-    const { user } = this.context;
-    const { httpResponse } = this.state;
-    if (!user) return <div>Loading...</div>;
+    const { httpResponse, selectedOption } = this.state;
     return (
-      <section className="form-section">
-        <form autoComplete="off" className="form" onChange={this.handleChange} onSubmit={this.handleSubmit}>
-          <div style={{ textAlign: "center" }}>
-            <h3 style={{ margin: "15px" }} className="header">Demande de réglages</h3>
+      <form className="formMachine" onSubmit={this.handleSubmit}>
+        <p style={{ cursor: "pointer" }} onClick={this.props.handleFormReglages} className="close-link">
+          X
+                </p>
+        <h3>Demande Réglages</h3>
 
-            {httpResponse && (
-              <FeedBack
-                message={httpResponse.message}
-                status={httpResponse.status}
-              />
-            )}
+        {httpResponse && (
+          <FeedBack
+            message={httpResponse.message}
+            status={httpResponse.status}
+          />
+        )}
 
-            <div style={{ textAlign: "left", margin: "40px" }}>
-              <div className="form-group">
-                <label className="label" htmlFor="reglages">Demande de réglages</label> <br />
-                <input className="input" id="reglages" type="text" name="reglages"
-                /> <br />
-                {!this.isValidInput("reglages") && (
-                  <p className="input-error">Champ invalide</p>
-                )}
-              </div>
+        <MultiSelect
+          options={options}
+          selected={selectedOption}
+          onSelectedChanged={selectedOption => this.setState({ selectedOption })}
+          overrideStrings={{
+            selectSomeItems: "Sélectionner des réglages",
+            allItemsAreSelected: "Tous les réglages sélectionnés",
+            selectAll: "Tout sélectionner",
+            search: "Rechercher",
+        }}
+        />
 
-              <div className="form-group">
-                  
-                <label className="label" htmlFor="description">Description détaillée de la demande (optionnelle)</label><br />
-                <input className="input" id="description" type="text" name="description"/> <br />
+        <div className="form-group">
+          <label className="label" htmlFor="description">
+            Description détaillée de la demande (optionnelle)
+                    </label><br />
+          <input className="input" type="text" id="description" name="description" onChange={this.handleChangeDescription} /> <br />
+        </div>
 
-                {!this.isValidInput("lastName") && (
-                  <p className="input-error">Champ invalide</p>
-                )}
-              </div>
-
-              <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "35px", color: "white", boxShadow: "5px 5px 2px 1px rgba(0, 0, 255, .2)" }} primary disabled={this.checkError()} >
-                Envoyer la demande
-            </button>
-            </div>
-          </div>
-        </form>
-      </section>
-    );
+        <button>Envoyer la demande</button>
+      </form>
+    )
   }
 }
 
-export default FormReglage;
+
+export default FormReglage; 
