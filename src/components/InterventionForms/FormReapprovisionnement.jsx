@@ -3,19 +3,8 @@ import MultiSelect from "@khanacademy/react-multi-select";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
+import {reapprovisionnmentOptions} from "../../data/options";
 
-const options = [
-    { value: 'Café', label: 'Café' },
-    { value: 'Café noisette', label: 'Café noisette' },
-    { value: 'Café vanille', label: 'Café vanille' },
-    { value: 'Lait', label: 'Lait' },
-    { value: 'Chocolat', label: 'Chocolat' },
-    { value: 'Thé', label: 'Thé' },
-    { value: 'Sucre', label: 'Sucre' },
-    { value: 'Touillettes', label: 'Touillettes' },
-    { value: 'Petits gobelets', label: 'Petits gobelets' },
-    { value: 'Grands gobelets', label: 'Grands gobelets' },
-];
 
 class FormReapprovisionnement extends React.Component {
     static contextType = UserContext;
@@ -38,7 +27,7 @@ class FormReapprovisionnement extends React.Component {
         const { httpResponse, error, ...data } = this.state;
 
         apiHandler
-            .createIntervention(this.props.id_machine, data)
+            .createIntervention(this.props.id_pointofSale,this.props.id_machine, data)
             .then((data) => {
                 this.setState({
                     httpResponse: {
@@ -81,7 +70,7 @@ class FormReapprovisionnement extends React.Component {
                 )}
 
                 <MultiSelect
-                    options={options}
+                    options={reapprovisionnmentOptions}
                     selected={selectedOption}
                     onSelectedChanged={selectedOption => this.setState({ selectedOption })}
                     overrideStrings={{

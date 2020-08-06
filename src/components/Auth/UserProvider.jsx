@@ -6,6 +6,7 @@ class UserProvider extends Component {
   state = {
     user: null,
     isLoggedIn: false,
+    isAdmin:false,
     isLoading: true,
   };
 
@@ -13,20 +14,31 @@ class UserProvider extends Component {
     apiHandler
       .isLoggedIn()
       .then((data) => {
-        this.setState({ user: data, isLoggedIn: true, isLoading: false });
+        console.log(data)
+        if (data.role === "admin"){
+          this.setState({ user: data, isLoggedIn: true, isAdmin: true, isLoading: false });
+        }
+        else{
+          this.setState({ user: data, isLoggedIn: true, isAdmin: false, isLoading: false });
+        }
+       
       })
       .catch((error) => {
         console.log(error);
-        this.setState({ user: null, isLoggedIn: false, isLoading: false });
+        this.setState({ user: null, isLoggedIn: false, isAdmin:false, isLoading: false });
       });
   }
 
   setUser = (user) => {
-    this.setState({ user, isLoggedIn: true });
+    if (user.role ==="client"){
+      this.setState({ user, isLoggedIn: true, isAdmin: false });
+    } else{
+      this.setState({ user, isLoggedIn: true, isAdmin: true });
+    }
   };
 
   removeUser = () => {
-    this.setState({ user: null, isLoggedIn: false });
+    this.setState({ user: null, isLoggedIn: false, isAdmin:false });
   };
 
   render() {
@@ -37,6 +49,7 @@ class UserProvider extends Component {
       setUser: this.setUser,
       removeUser: this.removeUser,
       isLoggedIn: this.state.isLoggedIn,
+      isAdmin: this.state.isAdmin,
       isLoading: this.state.isLoading,
     };
 

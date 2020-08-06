@@ -1,8 +1,55 @@
 import React, { Component } from "react";
-import Autocomplete from "../Autocomplete";
+import Autocomplete from "../ClientsComponents/Autocomplete";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
+
+//material-ui
+import {Avatar, Button, CssBaseline, TextField, Typography, Container} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: "75px",
+    height: "auto",
+    margin: theme.spacing(3),
+    backgroundColor: "transparent",
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#20C9E0",
+    fontWeight: "bold"
+  },
+  border: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "brown"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#20C9E0",
+    }
+  }
+}));
+
+const withMaterialStyles = (ComponentToPassStylesTo) => {
+  return (props) => {
+    const classes = useStyles();
+    return <ComponentToPassStylesTo {...props} classes={classes} />;
+  };
+};
 
 class FormPDV extends Component {
   static contextType = UserContext;
@@ -54,51 +101,61 @@ class FormPDV extends Component {
   };
 
   render() {
+    const classes = this.props.classes;
     const { httpResponse } = this.state;
 
     return (
-      <div className="formPDV-container">
-        <form
-          className="FormPDV"
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        >
-          <p style={{cursor:"pointer"}} onClick={this.props.displayForm} className="close-link">
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <p style={{ cursor: "pointer", fontWeight:"bold" }} onClick={this.props.displayForm} className="close-link">
             X
-          </p>
-          <h2>Ajout d'un point de vente</h2>
+        </p>
+          <Avatar className={classes.avatar}>
+            <img src="../media/coffee-cup.png" alt="coffee-cup" />
+          </Avatar>
+
+          <Typography component="h1" variant="h5">
+            Ajout d'un point de vente
+        </Typography>
           {httpResponse && (
             <FeedBack
               message={httpResponse.message}
               status={httpResponse.status}
             />
           )}
-          <div className="form-group">
-            <label className="label" htmlFor="name">
-              Nom du point de vente
-            </label> <br/>
-            <input
-              className="input"
-              type="text"
-              placeholder="Boulangerie Beaugrenelle"
+          <form className={classes.form} onChange={this.handleChange} onSubmit={this.handleSubmit} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Nom du point de vente"
               name="name"
-            /> <br/>
-          </div>
-          
-          <div className="form-group">
-            <label className="label" htmlFor="location">
-              Adresse du point de vente
-            </label><br/>
+              autoComplete="name"
+              autoFocus
+              className={classes.border}
+            />
+
             <Autocomplete
               onSelect={this.handlePlace}
-            /> <br/>
-          </div>
-      
-          <button>Ajouter ce point de vente</button>
-        </form>
-      </div>
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Ajouter ce point de vente
+          </Button>
+          </form>
+        </div>
+      </Container>
     );
   }
 }
 
-export default FormPDV;
+export default withMaterialStyles(FormPDV);

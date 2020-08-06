@@ -7,7 +7,7 @@ class FormProfile extends Component {
   static contextType = UserContext;
 
   state = {
-    httpRespone: null,
+    httpResponse: null,
   };
 
   handleChange = (event) => {
@@ -34,9 +34,9 @@ class FormProfile extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { email, firstName, lastName, companyName, phoneNumber } = this.state;
+    const { httpResponse, ...data } = this.state;
     apiHandler
-      .updateClient(this.state)
+      .updateClient(data)
       .then((data) => {
         this.context.setUser(data);
         this.setState({

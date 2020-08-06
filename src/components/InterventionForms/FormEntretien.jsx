@@ -24,7 +24,7 @@ class FormEntretien extends Component {
         const { httpResponse, error, ...data } = this.state;
 
         apiHandler
-            .createIntervention(this.props.id_machine, data)
+            .createIntervention(this.props.id_pointofSale,this.props.id_machine, data)
             .then((data) => {
                 this.setState({
                     httpResponse: {

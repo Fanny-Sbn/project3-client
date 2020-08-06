@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../components/Auth/UserContext";
-import apiHandler from "../api/apiHandler";
-import FeedBack from "../components/FeedBack";
 
 class Profile extends Component {
   static contextType = UserContext;

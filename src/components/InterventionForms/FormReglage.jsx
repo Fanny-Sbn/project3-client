@@ -3,21 +3,14 @@ import MultiSelect from "@khanacademy/react-multi-select";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
-
-const options = [
-  { value: 'Quantité eau', label: `Quantité d'eau et dose` },
-  { value: 'Quantité poudre', label: 'Quantité de poudre' },
-  { value: 'Température', label: 'Température' },
-  { value: 'Changement de sélection', label: 'Changement de sélection' },
-  { value: 'Ajout de sélection', label: 'Ajout de sélection' }
-]
+import { reglagesOptions } from '../../data/options';
 
 class FormReglage extends React.Component {
   static contextType = UserContext;
   state = {
     httpResponse: null,
     error: null,
-    title: "Demande réapprovisionnement",
+    title: "Demande réglages",
     selectedOption: [],
   }
 
@@ -33,7 +26,7 @@ class FormReglage extends React.Component {
     const { httpResponse, error, ...data } = this.state;
 
     apiHandler
-      .createIntervention(this.props.id_machine, data)
+      .createIntervention(this.props.id_pointofSale,this.props.id_machine, data)
       .then((data) => {
         this.setState({
           httpResponse: {
@@ -76,7 +69,7 @@ class FormReglage extends React.Component {
         )}
 
         <MultiSelect
-          options={options}
+          options={reglagesOptions}
           selected={selectedOption}
           onSelectedChanged={selectedOption => this.setState({ selectedOption })}
           overrideStrings={{
