@@ -93,6 +93,12 @@ export default {
     .then((res) => res.data)
     .catch(errorHandler);
   },
+  updateIntervention(id, update){
+    return service
+    .patch(`/api/admin/intervention/${id}/${update}`)
+    .then((res) => res.data)
+    .catch(errorHandler);
+  },
   signup(userInfo) {
     return service
       .post("/api/auth/signup", userInfo)

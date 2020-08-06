@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
+import { Avatar, Button, CssBaseline, TextField, Typography, Container, Select } from '@material-ui/core';
 
 class FormEntretien extends Component {
     static contextType = UserContext;
@@ -9,7 +10,8 @@ class FormEntretien extends Component {
         httpResponse: null,
         error: null,
         title: "Demande entretien",
-        selectedOption:"Changement du filtre"
+        update:"entretien",
+        selectedOption: "Changement du filtre"
     };
 
     handleChange = (event) => {
@@ -24,7 +26,7 @@ class FormEntretien extends Component {
         const { httpResponse, error, ...data } = this.state;
 
         apiHandler
-            .createIntervention(this.props.id_pointofSale,this.props.id_machine, data)
+            .createIntervention(this.props.id_pointofSale, this.props.id_machine, data)
             .then((data) => {
                 this.setState({
                     httpResponse: {
@@ -33,7 +35,7 @@ class FormEntretien extends Component {
                     },
                 });
                 this.timeoutId = setTimeout(() => {
-                    this.setState({ httpResponse: null});
+                    this.setState({ httpResponse: null });
                     this.props.handleFormEntretien();
                 }, 1000);
             })
@@ -53,16 +55,19 @@ class FormEntretien extends Component {
     render() {
         const { httpResponse } = this.state;
         return (
-            <div className="formMachine-container">
+            <div style={{ padding: "10px", border: "1px solid #20C9E0", backgroundColor: "white", borderRadius: "5px" }} className="formMachine-container">
                 <form
                     className="formMachine"
                     onChange={this.handleChange}
                     onSubmit={this.handleSubmit}
                 >
-                    <p style={{ cursor: "pointer" }} onClick={this.props.handleFormEntretien} className="close-link">
+                    <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={this.props.handleFormEntretien} className="close-link">
                         X
-        </p>
-                    <h2>Demande Entretien</h2>
+                    </p> <br />
+
+                    <Typography style={{ fontWeight: "bold" }} component="h1" variant="h5" align="center">
+                        Demande entretien
+                    </Typography><br />
 
                     {httpResponse && (
                         <FeedBack
@@ -70,11 +75,10 @@ class FormEntretien extends Component {
                             status={httpResponse.status}
                         />
                     )}
-
                     <div className="form-group">
                         <label>
-                            Quel type d'entretien désirez-vous ? 
-          <select value={this.state.value}>
+                            Quel type d'entretien désirez-vous ?
+                    <select style={{ borderRadius: "5px", width: "90%" }} value={this.state.value}>
                                 <option value="chgt_filtre">Changement du filtre</option>
                                 <option value="chgt_joints">Changement des joints d'usure</option>
                                 <option value="check_up">Nettoyage/check-up global</option>
@@ -82,17 +86,22 @@ class FormEntretien extends Component {
                             </select>
                         </label>
                     </div>
+                    <br />
 
                     <div className="form-group">
                         <label className="label" htmlFor="description">
                             Description détaillée de la demande (optionnelle)
           </label><br />
-                        <input className="input" type="text" id="description" name="description" /> <br />
+                        <input style={{ borderRadius: "5px", borderColor: "grey", width: "90%", border: "1px solid", minHeight: "150px" }} className="input" type="text" id="description" name="description" /> <br />
                     </div>
 
-                    <button>Envoyer la demande</button>
+                    <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "20px", color: "white", boxShadow: "5px 5px 2px 1px rgba(0, 0, 255, .2)" }}>Envoyer la demande</button>
                 </form>
             </div>
+
+
+
+
 
         );
     }

@@ -23,12 +23,27 @@ const useStyles = makeStyles((theme) => ({
         display: "inline",
         marginRight: "10px"
     },
+    question: {
+        margin: "10px 0px"
+    },
     title: {
         fontWeight: 'bold',
     },
     oblique: {
         fontStyle: "oblique",
         cursor: "pointer"
+    },
+    demande: {
+        backgroundColor: "#E7FCFC",
+        borderRadius: "5px",
+        padding: "10px"
+    },
+    cardDemande: {
+        margin: "10px 0px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0px 10px"
     }
 
 }));
@@ -75,7 +90,7 @@ export class Machine extends Component {
 
         return (
             <React.Fragment>
-                <Container align="center" className={classes.machine} >
+                <Container style={{padding:"10px",border:"1px solid #20C9E0", borderRadius:"5px", boxShadow:"5px 5px 2px 1px rgba(0, 0, 255, .2)"}}align="center" className={classes.machine} >
                     <img style={{ display: "inline", marginRight: "10px", width: "50px", textAlign: "left" }} src={this.props.image} alt="machine" />
                     <Typography className={classes.machineDetails} component="h1" variant="h4">
                         {this.props.brand}
@@ -91,26 +106,31 @@ export class Machine extends Component {
 
                 {
                     this.state.forms && (
-                        <Container align="center">
-                            <p style={{ cursor: "pointer" }} onClick={this.displayForms} className="close-link">
+                        <Container className={classes.demande} align="center">
+                            <p style={{ cursor: "pointer", fontWeight: "bold" }} onClick={this.displayForms} className="close-link">
                                 X
                             </p>
 
-                            <Typography align="center" component="h1" variant="h5" onClick={this.displayForms}>
+                            <Typography className={classes.question} align="center" component="h1" variant="h5" onClick={this.displayForms}>
                                 Quel est l'objet de votre demande ?
                             </Typography>
 
 
-                            <Card onClick={this.handleFormReapprovisionnement}>
-                                <p>Réapprovisionnement</p>
+                            <Card className={classes.cardDemande} onClick={this.handleFormReapprovisionnement}>
+                                <Typography component="h1" variant="h5">
+                                    Réapprovisionnement
+                                </Typography>
                                 <img style={{ width: "30px" }} src="./media/beans-coffee.png" alt="Réa" />
                             </Card>
+                            
                             {this.state.formReapprovisionnement && (
                                 <FormReapprovisionnement handleFormReapprovisionnement={this.handleFormReapprovisionnement} id_machine={this.props._id} id_pointofSale={this.props.id_pointofSale} />
                             )}
 
-                            <Card onClick={this.handleFormDepannage}>
-                                <p>Dépannage</p>
+                            <Card className={classes.cardDemande} onClick={this.handleFormDepannage}>
+                                <Typography component="h1" variant="h5">
+                                    Dépannage
+                                </Typography>
                                 <img style={{ width: "30px" }} src="./media/tools.png" alt="tools" />
                             </Card>
 
@@ -118,8 +138,10 @@ export class Machine extends Component {
                                 <FormDepannage handleFormDepannage={this.handleFormDepannage} id_machine={this.props._id} id_pointofSale={this.props.id_pointofSale} />
                             )}
 
-                            <Card onClick={this.handleFormEntretien}>
-                                <p>Entretien</p>
+                            <Card className={classes.cardDemande} onClick={this.handleFormEntretien}>
+                                <Typography component="h1" variant="h5">
+                                    Entretien
+                                </Typography>
                                 <img style={{ width: "30px" }} src="./media/entretien.png" alt="entretien" />
                             </Card>
 
@@ -127,9 +149,11 @@ export class Machine extends Component {
                                 <FormEntretien handleFormEntretien={this.handleFormEntretien} id_machine={this.props._id} id_pointofSale={this.props.id_pointofSale} />
                             )}
 
-                            <Card onClick={this.handleFormReglages}>
-                                <p>Réglages</p>
-                                <img style={{ width: "30px" }} src="./media/settings.png" alt="settings" />
+                            <Card className={classes.cardDemande} onClick={this.handleFormReglages}>
+                                <Typography component="h1" variant="h5">
+                                    Réglages
+                                </Typography>
+                                <img style={{ display: "inline", width: "30px" }} src="./media/settings.png" alt="settings" />
                             </Card>
 
                             {this.state.formReglage && (

@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/uploadWidget.css";
 
 class UploadWidget extends React.Component {
   constructor(props) {

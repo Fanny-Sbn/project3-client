@@ -1,0 +1,15 @@
+.UploadWidget {
+    border: 1px solid #4b2604;
+    color: #4b2604;
+    border-radius: 50px;
+    font-size: 14px;
+    display: inline-block;
+    padding: 10px 22px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .UploadWidget.input[type="file"] {
+    display: none !important;
+  }

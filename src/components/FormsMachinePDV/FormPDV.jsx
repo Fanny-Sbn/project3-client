@@ -112,7 +112,7 @@ class FormPDV extends Component {
             X
         </p>
           <Avatar className={classes.avatar}>
-            <img src="../media/coffee-cup.png" alt="coffee-cup" />
+            <img src="../media/shop2.png" alt="coffee-cup" />
           </Avatar>
 
           <Typography component="h1" variant="h5">

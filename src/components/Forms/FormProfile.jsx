@@ -3,6 +3,54 @@ import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
 
+import { Avatar, Button, CssBaseline, TextField, Typography, Container, Grid, Link } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: "75px",
+    height: "auto",
+    margin: theme.spacing(3),
+    backgroundColor: "transparent",
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  bold:{
+    fontWeight:"bold"
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#20C9E0",
+    fontWeight: "bold"
+  },
+  border: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "brown"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#20C9E0",
+    }
+  }
+}));
+
+const withMaterialStyles = (ComponentToPassStylesTo) => {
+  return (props) => {
+    const classes = useStyles();
+    return <ComponentToPassStylesTo {...props} classes={classes} />;
+  };
+};
+
 class FormProfile extends Component {
   static contextType = UserContext;
 
@@ -67,113 +115,124 @@ class FormProfile extends Component {
 
 
   render() {
+    const classes = this.props.classes;
     const { user } = this.context;
     const { httpResponse } = this.state;
     if (!user) return <div>Loading...</div>;
     return (
-      <section className="form-section">
-        <form
-          autoComplete="off"
-          className="form"
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        >
-          <div style={{ textAlign: "center" }}>
-            <h3 style={{ margin: "15px" }} className="header">Modification du profil</h3>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
 
-            {httpResponse && (
-              <FeedBack
-                message={httpResponse.message}
-                status={httpResponse.status}
-              />
-            )}
-            <div style={{ textAlign: "left", margin: "40px" }}>
-              <div className="form-group">
-                <label className="label" htmlFor="firstName">
-                  Prénom
-            </label> <br />
-                <input
-                  className="input"
-                  id="firstName"
-                  type="text"
+          <Typography className={classes.bold} component="h1" variant="h4">
+            Modification du profil
+        </Typography>
+        <img style={{ width: "100px" }} src="./../media/coffee.png" alt="coffee" />
+
+          {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
+          <form className={classes.form} onChange={this.handleChange} onSubmit={this.handleSubmit} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
                   name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="Prénom"
+                  autoFocus
+                  className={classes.border}
                   defaultValue={user.firstName}
-                /> <br />
+                />
                 {!this.isValidInput("firstName") && (
                   <p className="input-error">Champ invalide</p>
                 )}
-              </div>
+              </Grid>
 
-              <div className="form-group">
-                <label className="label" htmlFor="lastName">
-                  Nom
-            </label><br />
-                <input
-                  className="input"
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   id="lastName"
-                  type="text"
+                  label="Nom"
                   name="lastName"
+                  autoComplete="lname"
+                  className={classes.border}
                   defaultValue={user.lastName}
-                /> <br />
+                />
                 {!this.isValidInput("lastName") && (
                   <p className="input-error">Champ invalide</p>
                 )}
-              </div>
-
-              <div className="form-group">
-                <label className="label" htmlFor="companyName">
-                  Nom de société
-            </label> <br />
-                <input
-                  className="input"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   id="companyName"
-                  type="text"
+                  label="Nom de société"
                   name="companyName"
+                  autoComplete="companyName"
+                  className={classes.border}
                   defaultValue={user.companyName}
-                /> <br />
+                />
                 {!this.isValidInput("companyName") && (
                   <p className="input-error">Champ invalide</p>
                 )}
-              </div>
-
-              <div className="form-group">
-                <label className="label" htmlFor="email">
-                  Email
-            </label> <br />
-                <input
-                  className="input"
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Téléphone"
+                  name="phoneNumber"
+                  autoComplete="phoneNumber"
+                  className={classes.border}
+                  defaultValue={user.phoneNumber}
+                />
+                {!this.isValidInput("phoneNumber") && (
+                  <p className="input-error">Champ invalide</p>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   id="email"
-                  type="email"
+                  label="Email"
                   name="email"
+                  autoComplete="email"
+                  className={classes.border}
                   defaultValue={user.email}
                   disabled
-                /> <br />
-              </div>
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sauvegarder
+          </Button>
+          </form>
+        </div>
+      </Container>
 
-              <div className="form-group">
-                <label className="label" htmlFor="phoneNumber">
-                  Phone number
-            </label> <br />
-                <input
-                  className="input"
-                  id="phoneNumber"
-                  type="text"
-                  name="phoneNumber"
-                  defaultValue={user.phoneNumber}
-                /> <br />
-                {!this.isValidInput("phoneNumber") && (
-                  <p className="input-error">Champ invalid</p>
-                )}
-              </div>
-              <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "35px", color: "white", boxShadow: "5px 5px 2px 1px rgba(0, 0, 255, .2)" }} primary disabled={this.checkError()} >
-                Sauvegarder
-          </button>
-            </div>
-          </div>
-        </form>
-      </section>
     );
   }
 }
 
-export default FormProfile;
+export default withMaterialStyles(FormProfile);

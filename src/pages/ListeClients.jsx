@@ -3,9 +3,8 @@ import SearchBar from '../components/SearchBar';
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
 import Client from "../components/AdminComponents/Client";
+import {Container, Grid } from '@material-ui/core';
 
-import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 class ListeClients extends Component {
     static contextType = UserContext;
@@ -43,10 +42,13 @@ class ListeClients extends Component {
 
         return (
             <React.Fragment>
-                <h2 style={{ textAlign: "center" }}>
-                    Liste des clients
+                <Grid style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+                    <h2 style={{ textAlign: "center" }}>
+                        Liste des clients
                 </h2>
-                <SearchBar style={{ textAlign: "center" }} callback={this.handleSearch} searchValue={this.state.searchValue} />
+                    <SearchBar callback={this.handleSearch} searchValue={this.state.searchValue} />
+                </Grid>
+
 
 
                 {filterClients.map((client, index) => {

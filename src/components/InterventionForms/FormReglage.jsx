@@ -4,6 +4,7 @@ import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 import FeedBack from "../FeedBack";
 import { reglagesOptions } from '../../data/options';
+import { Avatar, Button, CssBaseline, TextField, Typography, Container, Select } from '@material-ui/core';
 
 class FormReglage extends React.Component {
   static contextType = UserContext;
@@ -11,6 +12,7 @@ class FormReglage extends React.Component {
     httpResponse: null,
     error: null,
     title: "Demande réglages",
+    update: "settings",
     selectedOption: [],
   }
 
@@ -26,7 +28,7 @@ class FormReglage extends React.Component {
     const { httpResponse, error, ...data } = this.state;
 
     apiHandler
-      .createIntervention(this.props.id_pointofSale,this.props.id_machine, data)
+      .createIntervention(this.props.id_pointofSale, this.props.id_machine, data)
       .then((data) => {
         this.setState({
           httpResponse: {
@@ -55,40 +57,47 @@ class FormReglage extends React.Component {
   render() {
     const { httpResponse, selectedOption } = this.state;
     return (
-      <form className="formMachine" onSubmit={this.handleSubmit}>
-        <p style={{ cursor: "pointer" }} onClick={this.props.handleFormReglages} className="close-link">
-          X
-                </p>
-        <h3>Demande Réglages</h3>
+      <div style={{ padding: "10px", border: "1px solid #20C9E0", backgroundColor: "white", borderRadius: "5px" }} className="formMachine-container">
+        <form
+          className="formMachine"
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        >
+          <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={this.props.handleFormReglages} className="close-link">
+            X
+                    </p> <br />
 
-        {httpResponse && (
-          <FeedBack
-            message={httpResponse.message}
-            status={httpResponse.status}
-          />
-        )}
+          <Typography style={{ fontWeight: "bold" }} component="h1" variant="h5" align="center">
+            Demande réglages
+                    </Typography><br />
 
-        <MultiSelect
-          options={reglagesOptions}
-          selected={selectedOption}
-          onSelectedChanged={selectedOption => this.setState({ selectedOption })}
-          overrideStrings={{
-            selectSomeItems: "Sélectionner des réglages",
-            allItemsAreSelected: "Tous les réglages sélectionnés",
-            selectAll: "Tout sélectionner",
-            search: "Rechercher",
-        }}
-        />
+          {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
+          <MultiSelect
+            options={reglagesOptions}
+            selected={selectedOption}
+            onSelectedChanged={selectedOption => this.setState({ selectedOption })}
+            overrideStrings={{
+              selectSomeItems: "Sélectionner des réglages",
+              allItemsAreSelected: "Tous les réglages sélectionnés",
+              selectAll: "Tout sélectionner",
+              search: "Rechercher",
+            }} /> <br/>
 
-        <div className="form-group">
-          <label className="label" htmlFor="description">
-            Description détaillée de la demande (optionnelle)
-                    </label><br />
-          <input className="input" type="text" id="description" name="description" onChange={this.handleChangeDescription} /> <br />
-        </div>
+                    <div className="form-group">
+            <label className="label" htmlFor="description">
+              Description détaillée de la demande (optionnelle)
+          </label><br />
+            <input style={{ borderRadius: "5px", borderColor: "grey", width: "90%", border: "1px solid", minHeight: "150px" }} className="input" type="text" id="description" name="description" /> <br />
+          </div>
 
-        <button>Envoyer la demande</button>
-      </form>
+          <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "20px", color: "white", boxShadow: "5px 5px 2px 1px rgba(0, 0, 255, .2)" }}>Envoyer la demande</button>
+        </form>
+      </div>
     )
   }
 }

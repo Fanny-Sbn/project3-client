@@ -7,7 +7,7 @@ import InterventionDemande from "../components/AdminComponents/InterventionDeman
 import PointOfSale from "../components/ClientsComponents/PointOfSale";
 import apiHandler from "../api/apiHandler";
 
-import { Avatar, Button, CssBaseline, TextField, Typography, Container } from '@material-ui/core';
+import { Typography, Container, Card,Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -158,13 +158,15 @@ class Home extends React.Component {
             )}
 
             {!userPointOfSale.length && (
-              <Container component="main" maxWidth="xs">
-                <p>Vous n'avez pas encore ajouté de point de vente</p>
-                <img style={{ borderRadius: "5px" }} src="/media/magasin.jpg" alt="" />
+              <Container style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "1px solid #20C9E0" }} component="main" maxWidth="xs">
+
+                <p style={{ textAlign: "center" }}>Vous n'avez pas encore ajouté de point de vente</p>
+                <img style={{ textAlign: "center", borderRadius: "5px", width: "200px" }} src="/media/magasin.jpg" alt="" />
+
               </Container>
             )}
 
-            <div className="pointOfSale" style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+            <div className="pointOfSale" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
               {userPointOfSale.map((pointOfSale, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -181,31 +183,59 @@ class Home extends React.Component {
         )}
 
         {context.isLoggedIn && context.isAdmin && (
-          <React.Fragment>
-            <p style={{ textAlign: "center" }}>Bienvenue dans votre espace personnel {user.firstName}</p>
-            <Link to="/liste-clients"><button style={{ backgroundColor: "#20C9E0", border: "white", padding: "30px", borderRadius: "100px", color: "white", fontWeight: "bold", margin: "30px", width: "200px" }}>Liste clients</button></Link>
-            <Link to="/carto-point-vente"><button style={{ backgroundColor: "#20C9E0", border: "white", padding: "30px", borderRadius: "100px", color: "white", fontWeight: "bold", margin: "30px", width: "200px" }}>Cartographie des points de vente</button></Link>
-            <div style={{ backgroundColor: "#B7CECE", borderRadius: "5px", margin: "20px", textAlign: "center" }} >Prochaines visites de contrôle</div>
-            <div style={{ borderRadius: "5px", textAlign: "center", width: "40vw", margin: "10px", backgroundColor: "#B7CECE" }} onClick={this.handleDepannage}>Demande dépannage</div>
+          <Container className={classes.addPadding} component="main" maxWidth="md">
+            <Typography style={{ margin: "10px 0px" }} component="h1" variant="h4" align="center">
+              Bienvenue dans votre espace personnel {user.firstName}
+            </Typography>
+           
+            <Link to="/liste-clients">
+              <Card style={{ margin:"15px 0px", borderRadius:"10px", border:"1px solid #E5F4F4", height:"60px", lineHeight:"60px", boxShadow:"5px 5px 2px 1px rgba(32, 201, 224, .2)" }} align="center">Liste clients</Card>
+            </Link>
+            <Link to="/carto-point-vente">
+              <Card style={{ margin:"15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", height:"60px", lineHeight:"60px", boxShadow:"5px 5px 2px 1px rgba(32 , 201, 224, .2)" }} align="center">Cartographie des points de vente</Card>
+            </Link>
+            {/*             <div style={{ backgroundColor: "#B7CECE", borderRadius: "5px", margin: "20px", textAlign: "center" }} >Prochaines visites de contrôle</div> */}
+
+            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleDepannage}>
+              <Typography component="h1" variant="h5">
+                Demande dépannage
+              </Typography>
+              <img style={{ width: "40px" }} src="./media/tools.png" alt="Réa" />
+              </Card>
             {depannage && (
-              <InterventionDemande displayForm={this.handleDepannage} test={depannageDemande} />
+              <InterventionDemande displayForm={this.handleDepannage} intervention={depannageDemande} />
             )}
 
-            <div style={{ borderRadius: "5px", textAlign: "center", width: "40vw", margin: "10px", backgroundColor: "#B7CECE" }} onClick={this.handleEntretien}>Demande entretien</div>
+            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleEntretien}>
+              <Typography component="h1" variant="h5">
+                Demande entretien
+              </Typography>
+              <img style={{ width: "40px" }} src="./media/entretien.png" alt="Réa" />
+              </Card>
             {entretien && (
-              <InterventionDemande displayForm={this.handleEntretien} test={entretienDemande} />
+              <InterventionDemande displayForm={this.handleEntretien} intervention={entretienDemande} />
             )}
 
-            <div style={{ borderRadius: "5px", textAlign: "center", width: "40vw", margin: "10px", backgroundColor: "#B7CECE" }} onClick={this.handleReapprovisionnement}>Demande réapprovisionnement</div>
+            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleReapprovisionnement}>
+              <Typography component="h1" variant="h5">
+                Demande réapprovisionnement
+              </Typography>
+              <img style={{ width: "40px" }} src="./media/beans-coffee.png" alt="Réa" />
+              </Card>
             {reapprovisionnement && (
-              <InterventionDemande displayForm={this.handleReapprovisionnement} test={reapprovisionnementDemande} />
+              <InterventionDemande displayForm={this.handleReapprovisionnement} intervention={reapprovisionnementDemande} />
             )}
 
-            <div style={{ borderRadius: "5px", textAlign: "center", width: "40vw", margin: "10px", backgroundColor: "#B7CECE" }} onClick={this.handleReglages}>Demande réglages</div>
+            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleReglages}>
+              <Typography component="h1" variant="h5">
+                Demande réglages
+              </Typography>
+              <img style={{ width: "40px" }} src="./media/settings.png" alt="Réa" />
+              </Card>
             {reglages && (
-              <InterventionDemande displayForm={this.handleReglages} test={reglagesDemande} />
+              <InterventionDemande displayForm={this.handleReglages} intervention={reglagesDemande} />
             )}
-          </React.Fragment>
+          </Container>
         )}
 
 
