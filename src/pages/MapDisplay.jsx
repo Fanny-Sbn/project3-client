@@ -35,7 +35,7 @@ export class MapDisplay extends Component {
 
     handleClose = () => {
         this.setState({ pointOfSale: null });
-      };
+    };
 
     render() {
         console.log(this.state.pointOfSale)
@@ -56,18 +56,22 @@ export class MapDisplay extends Component {
                     }}
                     center={[2.351027, 48.855]}
                 >
-                    {this.state.pointsOfSales.map((marker, _id) => (
-                        <Marker
-                            key={marker._id}
-                            coordinates={marker.location.coordinates}
-                            anchor="bottom"
-                            onClick={(event) => {
-                                this.markerClick(marker);
-                            }}
-                        >
-                            <img src="../media/coffee-cup.png" style={{ width: 50, height: 50 }} alt="marker" />
-                        </Marker>
-                    ))}
+                    {this.state.pointsOfSales.map((marker, _id) => {
+                        
+                        if (marker.location.coordinates.length !== 0) {
+                           return <Marker
+                                key={marker._id}
+                                coordinates={marker.location.coordinates}
+                                anchor="bottom"
+                                onClick={(event) => {
+                                    this.markerClick(marker);
+                                }}
+                            >
+                                <img src="../media/coffee-cup.png" style={{ width: 45, height: 45 }} alt="marker" />
+                            </Marker>
+                        }
+
+                    })}
                 </Map>
 
             </div>

@@ -8,43 +8,12 @@
     box-shadow: 0 0 50px lightgrey;
     border-radius: 20px;
     background-color: white;
-    width: 450px;
+    width: 250px;
     padding: 25px;
     margin: 75px auto;
     z-index: 100;
     overflow-y: auto;
     max-height: 75vh;
-  }
-  
-  .pdv-container .round-image {
-    height: 150px;
-    width: 150px;
-    border-radius: 100%;
-    overflow: hidden;
-    position: relative;
-    margin: 25px auto 10px;
-  }
-  
-  .pdv-container .round-image .user-img {
-    width: 100%;
-    object-position: 0 0;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .pdv-container .round-image-user {
-    min-height: 30px;
-    min-width: 30px;
-    border-radius: 100%;
-    overflow: hidden;
-    position: relative;
-    margin-right: 10px;
-  }
-  
-  .pdv-container .round-image-user img {
-    position: absolute;
-    width: 100%;
-    object-fit: cover;
   }
   
   .pdv-container .info {
@@ -84,10 +53,28 @@
   .location {
     margin: 1em 0;
   }
+
+  .location{
+    text-align: center;
+    font-style: oblique;
+  }
+
+  .machine{
+    text-align: center;
+  }
   
   .pdv-container {
     background-color: rgb(226, 226, 226);
     padding: 10px;
     border-radius: 10px;
+  }
+
+  .pdv-container .close-link{
+    color: white;
+    text-align: center;
+    background-color: rgb(219, 95, 95);
+    padding:1px;
+    width:17px;
+    border-radius: 5px;
   }
   

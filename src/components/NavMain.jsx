@@ -20,7 +20,7 @@ const NavMain = (props) => {
   }
 
   return (
-    <nav className="NavMain" style={{backgroundColor:"#20C9E0", color:"white", marginBottom:"20px", padding:"10px"}}>
+    <nav className="NavMain" style={{backgroundColor:"#20C9E0", color:"white", padding:"10px"}}>
       <NavLink exact to="/">
         <h3 className="logo" style={{textAlign:"center", marginRight:"20px"}}>Coffee&Trust</h3>
       </NavLink>
@@ -46,10 +46,10 @@ const NavMain = (props) => {
         )}
         {!context.isLoggedIn && (
           <React.Fragment>
-            <li>
+            <li style={{textAlign:"center"}}>
               <NavLink to="/signin">Se connecter</NavLink>
             </li>
-            <li>
+            <li style={{textAlign:"center"}}>
               <NavLink to="/signup">Créer un compte</NavLink>
             </li>
           </React.Fragment>
