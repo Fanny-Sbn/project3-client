@@ -12,7 +12,7 @@ class Clients extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card xs={12} xl={3} lg={3} sm={6} style={{ border: "1px solid #EBBEA4", margin: "10px 0px", padding: "10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .3)" }} >
+                <Card xs={12} xl={3} lg={3} sm={6} style={{ border: "1px solid #E5F4F4", margin: "10px 0px", padding: "10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .3)" }} >
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around",margin:"10px 0" }}>
                         <img style={{ width: "40px" }} src="../media/client.png" alt="heads" />
                         <div>

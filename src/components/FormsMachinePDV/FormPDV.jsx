@@ -79,7 +79,7 @@ class FormPDV extends Component {
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
           this.props.displayForm();
-        }, 1000);
+        }, 3000);
       })
       .catch((error) => {
         this.setState({

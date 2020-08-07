@@ -4,10 +4,11 @@ import UserContext from "../components/Auth/UserContext";
 import { withUser } from "../components/Auth/withUser";
 import FormPDV from "../components/FormsMachinePDV/FormPDV";
 import InterventionDemande from "../components/AdminComponents/InterventionDemande";
+import Archive from "../components/AdminComponents/Archive";
 import PointOfSale from "../components/ClientsComponents/PointOfSale";
 import apiHandler from "../api/apiHandler";
 
-import { Typography, Container, Card,Grid } from '@material-ui/core';
+import { Typography, Container, Card, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +39,9 @@ class Home extends React.Component {
       depannage: false,
       entretien: false,
       reglages: false,
+      archive: false,
       reapprovisionnement: false,
+      archiveIntervention: [],
       depannageDemande: [],
       entretienDemande: [],
       reglagesDemande: [],
@@ -116,12 +119,24 @@ class Home extends React.Component {
     }
   }
 
+  handleArchive = () => {
+    this.setState({ archive: !this.state.archive })
+    if (this.state.archive === false) {
+      apiHandler
+        .getArchive()
+        .then((archive) => {
+          this.setState({ archiveIntervention: archive });
+        })
+        .catch((error) => console.log(error));
+    }
+  }
+
   render() {
     const { context } = this.props;
     const { user } = this.context;
     const { formPDV, depannage, entretien, reapprovisionnement, reglages,
       reglagesDemande, entretienDemande, depannageDemande, reapprovisionnementDemande,
-      userPointOfSale } = this.state;
+      userPointOfSale, archive, archiveIntervention } = this.state;
     const classes = this.props.classes;
     /* if (!user) return null; */
 
@@ -130,7 +145,7 @@ class Home extends React.Component {
         {!context.isLoggedIn && (
           <React.Fragment >
             <div style={{ textAlign: "center", margin: "20px" }}>
-              <p>La société Hodas vous accompagne dans
+              <p>La société Coffee&Trust vous accompagne dans
               la maintenance de vos machines à café.</p> <br />
 
               <p>Si vous êtes l’un de nos clients, la création
@@ -187,53 +202,63 @@ class Home extends React.Component {
             <Typography style={{ margin: "10px 0px" }} component="h1" variant="h4" align="center">
               Bienvenue dans votre espace personnel {user.firstName}
             </Typography>
-           
+
             <Link to="/liste-clients">
-              <Card style={{ margin:"15px 0px", borderRadius:"10px", border:"1px solid #E5F4F4", height:"60px", lineHeight:"60px", boxShadow:"5px 5px 2px 1px rgba(32, 201, 224, .2)" }} align="center">Liste clients</Card>
+              <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", height: "60px", lineHeight: "60px", boxShadow: "5px 5px 2px 1px rgba(32, 201, 224, .2)" }} align="center">Liste clients</Card>
             </Link>
             <Link to="/carto-point-vente">
-              <Card style={{ margin:"15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", height:"60px", lineHeight:"60px", boxShadow:"5px 5px 2px 1px rgba(32 , 201, 224, .2)" }} align="center">Cartographie des points de vente</Card>
+              <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", height: "60px", lineHeight: "60px", boxShadow: "5px 5px 2px 1px rgba(32 , 201, 224, .2)" }} align="center">Cartographie des points de vente</Card>
             </Link>
             {/*             <div style={{ backgroundColor: "#B7CECE", borderRadius: "5px", margin: "20px", textAlign: "center" }} >Prochaines visites de contrôle</div> */}
 
-            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleDepannage}>
+            <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow: "5px 5px 2px 1px rgba(182, 127, 97, .4)" }} onClick={this.handleDepannage}>
               <Typography component="h1" variant="h5">
                 Demande dépannage
               </Typography>
               <img style={{ width: "40px" }} src="./media/tools.png" alt="Réa" />
-              </Card>
+            </Card>
             {depannage && (
               <InterventionDemande displayForm={this.handleDepannage} intervention={depannageDemande} />
             )}
 
-            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleEntretien}>
+            <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow: "5px 5px 2px 1px rgba(182, 127, 97, .4)" }} onClick={this.handleEntretien}>
               <Typography component="h1" variant="h5">
                 Demande entretien
               </Typography>
               <img style={{ width: "40px" }} src="./media/entretien.png" alt="Réa" />
-              </Card>
+            </Card>
             {entretien && (
               <InterventionDemande displayForm={this.handleEntretien} intervention={entretienDemande} />
             )}
 
-            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleReapprovisionnement}>
+            <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow: "5px 5px 2px 1px rgba(182, 127, 97, .4)" }} onClick={this.handleReapprovisionnement}>
               <Typography component="h1" variant="h5">
                 Demande réapprovisionnement
               </Typography>
               <img style={{ width: "40px" }} src="./media/beans-coffee.png" alt="Réa" />
-              </Card>
+            </Card>
             {reapprovisionnement && (
               <InterventionDemande displayForm={this.handleReapprovisionnement} intervention={reapprovisionnementDemande} />
             )}
 
-            <Card  style={{margin: "15px 0px", borderRadius:"10px",border:"1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow:"5px 5px 2px 1px rgba(182, 127, 97, .4)"}} onClick={this.handleReglages}>
+            <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow: "5px 5px 2px 1px rgba(182, 127, 97, .4)" }} onClick={this.handleReglages}>
               <Typography component="h1" variant="h5">
                 Demande réglages
               </Typography>
               <img style={{ width: "40px" }} src="./media/settings.png" alt="Réa" />
-              </Card>
+            </Card>
             {reglages && (
               <InterventionDemande displayForm={this.handleReglages} intervention={reglagesDemande} />
+            )}
+
+            <Card style={{ margin: "15px 0px", borderRadius: "10px", border: "1px solid #E5F4F4", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 10px", boxShadow: "5px 5px 2px 1px rgba(182, 127, 97, .4)" }} onClick={this.handleArchive}>
+              <Typography component="h1" variant="h5">
+                Interventions effectuées
+              </Typography>
+              <img style={{ width: "40px" }} src="./media/done.png" alt="Réa" />
+            </Card>
+            {archive && (
+              <Archive displayForm={this.handleArchive} intervention={archiveIntervention} />
             )}
           </Container>
         )}

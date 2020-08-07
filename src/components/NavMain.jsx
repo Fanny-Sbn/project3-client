@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import apiHandler from "../api/apiHandler";
 import "../styles/NavMain.css";
-
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const NavMain = (props) => {
   const { context } = props;
 
@@ -19,13 +20,19 @@ const NavMain = (props) => {
   }
 
   return (
-    <nav className="NavMain" style={{backgroundColor:"#20C9E0", color:"white", marginBottom:"20px"}}>
+    <nav className="NavMain" style={{backgroundColor:"#20C9E0", color:"white", marginBottom:"20px", padding:"10px"}}>
       <NavLink exact to="/">
-        <h3 className="logo" style={{marginRight:"20px"}}>Hodas</h3>
+        <h3 className="logo" style={{textAlign:"center", marginRight:"20px"}}>Coffee&Trust</h3>
       </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
           <React.Fragment>
+            <li>
+              <NavLink to="/">
+                <HomeIcon />
+              </NavLink>
+            </li>
+
             <li>
               <NavLink to="/profile">
                 Profil
@@ -33,7 +40,7 @@ const NavMain = (props) => {
             </li>
 
             <li>
-              <p onClick={handleLogout}>Se déconnecter</p>
+              <p onClick={handleLogout}><ExitToAppIcon /></p>
             </li>
           </React.Fragment>
         )}

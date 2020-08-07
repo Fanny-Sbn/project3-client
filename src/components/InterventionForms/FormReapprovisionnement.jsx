@@ -41,7 +41,7 @@ class FormReapprovisionnement extends React.Component {
                 this.timeoutId = setTimeout(() => {
                     this.setState({ httpResponse: null });
                     this.props.handleFormReapprovisionnement();
-                }, 1000);
+                }, 3000);
             })
             .catch((error) => {
                 this.setState({
@@ -52,7 +52,7 @@ class FormReapprovisionnement extends React.Component {
                 });
                 this.timeoutId = setTimeout(() => {
                     this.setState({ httpResponse: null });
-                }, 1000);
+                }, 3000);
             });
     };
 
@@ -99,7 +99,7 @@ class FormReapprovisionnement extends React.Component {
                         <input style={{ borderRadius: "5px", borderColor: "grey", width: "90%", border: "1px solid", minHeight: "150px" }} className="input" type="text" id="description" name="description" /> <br />
                     </div>
 
-                    <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "20px", color: "white", boxShadow: "5px 5px 2px 1px rgba(0, 0, 255, .2)" }}>Envoyer la demande</button>
+                    <button style={{ padding: "10px", borderRadius: "50px", textAlign: "center", backgroundColor: "#20C9E0", border: "0px", marginTop: "20px", color: "white", boxShadow: "5px 5px 2px 1px rgba(32, 201, 224, .2)" }}>Envoyer la demande</button>
                 </form>
             </div>
         )

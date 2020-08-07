@@ -90,8 +90,8 @@ export class Machine extends Component {
 
         return (
             <React.Fragment>
-                <Container style={{padding:"10px",border:"1px solid #20C9E0", borderRadius:"5px", boxShadow:"5px 5px 2px 1px rgba(0, 0, 255, .2)"}}align="center" className={classes.machine} >
-                    <img style={{ display: "inline", marginRight: "10px", width: "50px", textAlign: "left" }} src={this.props.image} alt="machine" />
+                <Container style={{padding:"10px",border:"1px solid #20C9E0", borderRadius:"5px", boxShadow:"5px 5px 2px 1px rgba(32, 201, 224, .2)"}}align="center" className={classes.machine} >
+                    <img style={{ display: "inline", marginRight: "10px", width: "55px", textAlign: "left" }} src={this.props.image} alt="machine" />
                     <Typography className={classes.machineDetails} component="h1" variant="h4">
                         {this.props.brand}
                     </Typography>

@@ -87,7 +87,7 @@ class FormMachine extends Component {
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
           this.props.handleFormMachine();
-        }, 2000);
+        }, 3000);
       })
       .catch((error) => {
         this.setState({
@@ -124,7 +124,7 @@ class FormMachine extends Component {
             X
         </p>
           <Avatar className={classes.avatar}>
-            <img src="../media/logo-machine.png" alt="coffee-cup" />
+            <img src="../media/blue-machine.png" alt="coffee-cup" />
           </Avatar>
 
           <Typography component="h1" variant="h5">

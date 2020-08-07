@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
+import FeedBack from "../FeedBack";
 
 import {Avatar, Button, CssBaseline, TextField, Typography, Container,Grid,Link} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,6 +59,7 @@ class FormSignup extends Component {
     phoneNumber: "",
     email: "",
     password: "",
+    httpResponse: null,
   };
 
   handleChange = (event) => {
@@ -68,20 +70,30 @@ class FormSignup extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const { httpResponse, ...data } = this.state;
 
     apiHandler
-      .signup(this.state)
+      .signup(data)
       .then((data) => {
         this.context.setUser(data);
         this.props.history.push("/");
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          httpResponse: {
+            status: "failure",
+            message: "Champs non remplis ou adresse email déjà utilisée",
+          },
+        });
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 3000);
       });
   };
 
   render() {
     const classes = this.props.classes;
+    const { httpResponse } = this.state;
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -92,6 +104,14 @@ class FormSignup extends Component {
           <Typography component="h1" variant="h5">
             Inscription
         </Typography>
+
+        {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
+          
           <form className={classes.form} onChange={this.handleChange} onSubmit={this.handleSubmit} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -122,7 +142,6 @@ class FormSignup extends Component {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
                   fullWidth
                   id="companyName"
                   label="Nom de société"

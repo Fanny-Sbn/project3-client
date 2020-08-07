@@ -93,6 +93,12 @@ export default {
     .then((res) => res.data)
     .catch(errorHandler);
   },
+  getArchive(){
+    return service
+    .get("/api/admin/archive")
+    .then((res) => res.data)
+    .catch(errorHandler);
+  },
   updateIntervention(id, update){
     return service
     .patch(`/api/admin/intervention/${id}/${update}`)

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import UserContext from "../Auth/UserContext";
 import { withRouter } from "react-router-dom";
 import apiHandler from "../../api/apiHandler";
-
+import FeedBack from "../FeedBack";
 //material-ui
-import {Avatar, Button, CssBaseline, TextField, Typography, Container,Grid,Link} from '@material-ui/core';
+import { Avatar, Button, CssBaseline, TextField, Typography, Container, Grid, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +55,7 @@ class FormSignin extends Component {
   state = {
     email: "",
     password: "",
+    httpResponse: null,
   };
 
   handleChange = (event) => {
@@ -74,20 +75,30 @@ class FormSignin extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
+    const { httpResponse, ...data } = this.state;
+
     apiHandler
-      .signin(this.state)
+      .signin(data)
       .then((data) => {
         this.context.setUser(data);
         this.props.history.push("/");
       })
       .catch((error) => {
-        console.log(error);
-        // Display error message here, if you set the state
+        this.setState({
+          httpResponse: {
+            status: "failure",
+            message: "Vos identifiants sont incorrectes",
+          },
+        });
+        this.timeoutId = setTimeout(() => {
+          this.setState({ httpResponse: null });
+        }, 3000);
       });
   };
 
   render() {
     const classes = this.props.classes;
+    const { httpResponse } = this.state;
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -98,6 +109,14 @@ class FormSignin extends Component {
           <Typography component="h1" variant="h5">
             Connexion
         </Typography>
+
+          {httpResponse && (
+            <FeedBack
+              message={httpResponse.message}
+              status={httpResponse.status}
+            />
+          )}
+
           <form className={classes.form} onChange={this.handleChange} onSubmit={this.handleSubmit} noValidate>
             <TextField
               variant="outlined"

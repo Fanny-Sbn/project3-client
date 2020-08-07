@@ -96,7 +96,7 @@ class FormProfile extends Component {
         this.timeoutId = setTimeout(() => {
           this.setState({ httpResponse: null });
           this.props.history.push("/profile");
-        }, 3000);
+        }, 4000);
       })
       .catch((error) => {
         this.setState({

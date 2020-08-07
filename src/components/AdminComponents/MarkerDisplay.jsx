@@ -10,9 +10,6 @@ const pdvDisplay = ({ pdv, handleClose }) => {
       </p>
       <h2 className="title">{pdv.name}</h2>
       <p className="location">{pdv.location.formattedAddress}</p>
-       {/*  <div className="round-image-user">
-          <img src={pdv.id_user.profileImg} alt="user" />
-        </div> */}
     </div>
   );
 };

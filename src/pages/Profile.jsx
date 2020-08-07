@@ -34,7 +34,7 @@ class Profile extends Component {
             </p>
           </div>
           <Link style={{textAlign:"center"}}className="link" to="/profile/settings">
-            <button style={{padding:"10px", borderRadius:"50px", textAlign:"center", backgroundColor:"#20C9E0", border:"0px", marginTop:"35px", color:"white", boxShadow:"5px 5px 2px 1px rgba(0, 0, 255, .2)"}}>
+            <button style={{padding:"10px", borderRadius:"50px", textAlign:"center", backgroundColor:"#20C9E0", border:"0px", marginTop:"35px", color:"white", boxShadow:"5px 5px 2px 1px rgba(32, 201, 224, .2)"}}>
               Modifier le profil
             </button>
           </Link>
