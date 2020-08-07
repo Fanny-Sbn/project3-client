@@ -98,6 +98,9 @@ export class Machine extends Component {
                     <Typography className={classes.machineDetails} component="h1" variant="body1">
                         ({this.props.model})
                     </Typography>
+                    {/* <Typography className={classes.machineDetails} component="h1" variant="body1">
+                        Demande(s) intervention :&nbsp;{this.props.interventions.length}
+                    </Typography> */}
 
                     <Typography align="right" className={classes.machineDetails, classes.oblique} component="h1" variant="h5" onClick={this.displayForms}>
                         Faire une demande

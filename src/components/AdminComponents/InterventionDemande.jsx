@@ -63,6 +63,14 @@ export class InterventionDemande extends Component {
 
                             </div>
 
+                            <div>
+                                <p style={{ fontWeight: "bold" }}>
+                                    Machine :&nbsp; {oneIntervention.id_machine.brand}&nbsp;({oneIntervention.id_machine.model})
+                                </p>
+
+
+                            </div>
+
 
                             <div style={{ fontWeight: "bold" }}>{oneIntervention.title}
                                 (<Moment format="DD/MM/YYYY">
